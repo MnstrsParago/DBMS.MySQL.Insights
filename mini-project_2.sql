@@ -31,3 +31,8 @@ SELECT user_id, COUNT( DISTINCT date) as lt FROM users
 GROUP BY user_id
 ORDER BY lt DESC;
 
+# 1.5
+SELECT user_id, SUM(view_adverts) / COUNT(distinct date) as rslt FROM users
+GROUP BY user_id
+HAVING COUNT(distinct date) >= 5
+ORDER BY rslt DESC;

@@ -26,3 +26,8 @@ GROUP BY date
 HAVING COUNT(DISTINCT user_id) >= 500
 ORDER BY vaui DESC;
 
+# 1.4
+SELECT user_id, COUNT( DISTINCT date) as lt FROM users
+GROUP BY user_id
+ORDER BY lt DESC;
+

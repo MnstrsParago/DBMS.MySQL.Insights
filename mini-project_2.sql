@@ -8,3 +8,8 @@ CREATE TABLE users (
     view_adverts INT
 );
 
+
+# Задание №1
+SELECT COUNT(DISTINCT user_id) FROM users
+WHERE date BETWEEN '2023-11-07' AND '2023-11-15';
+

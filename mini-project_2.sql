@@ -10,6 +10,13 @@ CREATE TABLE users (
 
 
 # Задание №1
+# 1.1
 SELECT COUNT(DISTINCT user_id) FROM users
 WHERE date BETWEEN '2023-11-07' AND '2023-11-15';
+
+# 1.2
+SELECT user_id, MAX(view_adverts) AS mx FROM users
+GROUP BY user_id
+ORDER BY mx DESC
+LIMIT 1;
 

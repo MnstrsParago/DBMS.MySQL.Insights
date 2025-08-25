@@ -36,3 +36,10 @@ SELECT user_id, SUM(view_adverts) / COUNT(distinct date) as rslt FROM users
 GROUP BY user_id
 HAVING COUNT(distinct date) >= 5
 ORDER BY rslt DESC;
+
+
+# Задание №2
+# BASE
+
+
+# 2.1

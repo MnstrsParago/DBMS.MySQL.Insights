@@ -20,3 +20,9 @@ GROUP BY user_id
 ORDER BY mx DESC
 LIMIT 1;
 
+# 1.3
+SELECT date, SUM(view_adverts) / COUNT(DISTINCT user_id) as vaui FROM users
+GROUP BY date
+HAVING COUNT(DISTINCT user_id) >= 500
+ORDER BY vaui DESC;
+

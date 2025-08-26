@@ -120,4 +120,13 @@ SELECT T2.NAME, T2.SALARY FROM t_tab2 T2 WHERE T2.AGE < 26;
 -- Я мог бы посчитать с помощью COUNT, но в заданиях дали только вопросы, а не просили написать запросы.
 
 # Здаание №3
--- 3.1
+# 3.1
+SELECT COUNT(*) FROM 
+(SELECT l.user_id FROM listenings L 
+JOIN audiobooks ab ON ab.uuid = l.audiobook_uuid 
+WHERE ab.title = 'Coraline' and coalesce(l.is_test, 0) = 0 
+GROUP BY l.user_id, l.audiobook_uuid, ab.duration 
+HAVING sum(greatest(l.position_to - l.position_from, 0)) >= ab.duration * 0.1);
+-- Answer: 54
+
+# 3.2

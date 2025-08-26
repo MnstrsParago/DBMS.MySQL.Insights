@@ -130,3 +130,9 @@ HAVING sum(greatest(l.position_to - l.position_from, 0)) >= ab.duration * 0.1);
 -- Answer: 54
 
 # 3.2
+SELECT l.os_name, ab.title, COUNT(DISTINCT l.user_id) AS user_count, SUM(l.position_to - l.position_from) / 3600 AS time_sum FROM listenings l
+JOIN audiobooks ab ON ab.uuid = l.audiobook_uuid
+WHERE COALESCE(l.is_test, 0) = 0
+GROUP BY l.os_name, ab.title
+ORDER BY l.os_name, ab.title;
+-- Answer: 14

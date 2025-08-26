@@ -81,15 +81,15 @@ INSERT INTO T_TAB2 (ID, NAME, SALARY, AGE) VALUES
 
 # 2.1
 SELECT DISTINCT GOODS_TYPE FROM t_tab1;
--- Ответ: 4
+# Ответ: 4
 
 # 2.2
 SELECT SUM(QUANTITY), SUM(AMOUNT) FROM t_tab1 WHERE GOODS_TYPE = 'MOBILE PHONE';
--- Ответ: 5, 640000
+# Ответ: 5, 640000
 
 # 2.3
 SELECT NAME FROM t_tab2 WHERE SALARY > 100000;
--- Ответ: 3
+# Ответ: 3
 
 # 2.4
 SELECT MIN(AGE), MAX(AGE), MIN(SALARY), MAX(SALARY) FROM t_tab2;
@@ -108,19 +108,19 @@ JOIN t_tab2 T2 ON T1.SELLER_NAME = T2.NAME WHERE T1.SELLER_NAME ='MIKE';
 # 2.8
 SELECT T2.NAME, T2.AGE FROM t_tab2 T2
 LEFT JOIN t_tab1 T1 ON T1.SELLER_NAME = T2.NAME WHERE T1.ID IS NULL;
--- Ответ: 1
+# Ответ: 1
 
 # 2.9
 SELECT T2.NAME, T2.SALARY FROM t_tab2 T2 WHERE T2.AGE < 26;
--- Ответ: 3
+# Ответ: 3
 
 # 2.10
--- Ответ: 0, так как отсутствуют продавцы с именем 'RITA' в таблице T_TAB1
+# Ответ: 0, так как отсутствуют продавцы с именем 'RITA' в таблице T_TAB1
 
--- Я мог бы посчитать с помощью COUNT, но в заданиях дали только вопросы, а не просили написать запросы.
+# Я мог бы посчитать с помощью COUNT, но в заданиях дали только вопросы, а не просили написать запросы.
 
-# Здаание №3
-# 3.1
+-- Здаание №3
+-- 3.1
 SELECT COUNT(*) FROM 
 (SELECT l.user_id FROM listenings L 
 JOIN audiobooks ab ON ab.uuid = l.audiobook_uuid 
@@ -129,10 +129,26 @@ GROUP BY l.user_id, l.audiobook_uuid, ab.duration
 HAVING sum(greatest(l.position_to - l.position_from, 0)) >= ab.duration * 0.1);
 -- Answer: 54
 
-# 3.2
+-- 3.2
 SELECT l.os_name, ab.title, COUNT(DISTINCT l.user_id) AS user_count, SUM(l.position_to - l.position_from) / 3600 AS time_sum FROM listenings l
 JOIN audiobooks ab ON ab.uuid = l.audiobook_uuid
 WHERE COALESCE(l.is_test, 0) = 0
 GROUP BY l.os_name, ab.title
 ORDER BY l.os_name, ab.title;
 -- Answer: 14
+
+-- 3.3
+SELECT ab.title, COUNT(DISTINCT l.user_id) AS user_count FROM audiobooks ab
+LEFT JOIN listenings l ON l.audiobook_uuid = ab.uuid AND COALESCE(l.is_test, 0) = 0 
+GROUP BY ab.title
+ORDER BY user_count DESC
+LIMIT 1;
+-- Answer: 'The Subtle Art of Not Giving a F*ck' = 1133
+
+-- 3.4
+SELECT ab.title, COUNT(ac.state) AS finished FROM audiobooks ab
+JOIN audio_cards ac ON ac.audiobook_uuid = ab.uuid AND ac.state = 'finished'
+GROUP BY ab.title
+ORDER BY finished DESC
+LIMIT 1;
+-- Answer: 'The Subtle Art of Not Giving a F*ck' = 86
